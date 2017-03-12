@@ -1,0 +1,13 @@
+/**
+ * \file lambt_config.h
+ *
+ *  Created on: Feb 17, 2017
+ *  \author: Jeremie Deray
+ */
+
+#ifndef _LAMBT_LAMBT_CONFIG_H_
+#define _LAMBT_LAMBT_CONFIG_H_
+
+#cmakedefine ENABLE_LAMBT
+
+#endif /* _LAMBT_LAMBT_CONFIG_H_ */
