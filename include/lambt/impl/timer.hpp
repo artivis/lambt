@@ -66,6 +66,9 @@ auto AverageTimer<Precision>::toc() -> Duration
 
   elapsed_[calls_++] = report_.last_elapsed;
 
+  avg_comp_ = false;
+  var_comp_ = false;
+
   return report_.last_elapsed;
 }
 
@@ -74,8 +77,14 @@ auto AverageTimer<Precision>::avg_toc() const -> Duration
 {
   if (calls_ == 0) return Duration(0);
 
-  report_.average = std::accumulate(elapsed_.begin(), elapsed_.end(),
-                                    Duration::zero()) / calls();
+  if (!avg_comp_)
+  {
+    report_.average = std::accumulate(elapsed_.begin(), elapsed_.end(),
+                                      Duration::zero()) / calls();
+
+    avg_comp_ = true;
+  }
+
   return report_.average;
 }
 
@@ -93,11 +102,18 @@ auto AverageTimer<Precision>::variance_toc() const -> Duration
   std::transform(elapsed_.begin(), elapsed_.begin()+ca+1, diff.begin(),
                  [&](const Duration& t) {return t - report_.average;});
 
-  report_.variance = std::inner_product(
-                        diff.begin(), diff.end(),
-                        diff.begin(), Duration::zero(),
-                        [](const Duration &a, const Duration &b) {return a+b;},
-                        [](const Duration &a, const Duration &b) {return Duration(a.count()*b.count());}) / ca;
+  if (!var_comp_)
+  {
+    report_.variance =
+        std::inner_product(
+            diff.begin(), diff.end(),
+            diff.begin(), Duration::zero(),
+            [](const Duration &a, const Duration &b) {return a+b;},
+            [](const Duration &a, const Duration &b) {return Duration(a.count()*b.count());}
+        ) / ca;
+
+    var_comp_ = true;
+  }
 
   return report_.variance;
 }
@@ -105,9 +121,11 @@ auto AverageTimer<Precision>::variance_toc() const -> Duration
 template <typename Precision>
 void AverageTimer<Precision>::reset()
 {
-  calls_  = 0;
-  filled  = false;
-  report_ = typename BaseTimer::report_t();
+  calls_    = 0;
+  filled    = false;
+  avg_comp_ = false;
+  var_comp_ = false;
+  report_   = typename BaseTimer::report_t();
   std::fill(elapsed_.begin(), elapsed_.end(), Duration::zero());
 }
 

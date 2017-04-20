@@ -147,6 +147,8 @@ public:
 protected:
 
    bool filled = false;
+   mutable bool avg_comp_ = false;
+   mutable bool var_comp_ = false;
 
    std::size_t calls_ = 0;
 
