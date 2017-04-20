@@ -44,10 +44,13 @@ struct ReportFormatter
     /// @todo option SHORT/FULL
     constexpr auto unit_string = to_str<UnitFormat::SHORT, Unit>::c_str;
 
+    const auto variance = report.variance.count();
+
     string_report
         << "\tlast:\t\t"   << report.last_elapsed.count() << unit_string << "\n"
         << "\taverage:\t"  << report.average.count()      << unit_string << "\n"
-        << "\tvariance:\t" << report.variance.count()     << unit_string << "\n"
+        << "\tstd:\t\t"    << std::sqrt(variance)         << unit_string << "\n"
+        << "\tvariance:\t" << variance                    << unit_string << "\n"
         << "\tcalls:\t\t"  << report.calls;
 
     return string_report.str();
