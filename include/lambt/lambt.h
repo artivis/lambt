@@ -53,7 +53,7 @@ using GlobalManager = Singleton< detail::GlobalManager_t, detail::GlobalManagerD
     lambt::GlobalManager::get().tic(Name);
 
   #define LAMBT_TOC(Name)\
-    auto ANONYMOUS_VAR(toc) = lambt::GlobalManager::get().toc(Name);
+    /*auto ANONYMOUS_VAR(toc) =*/ lambt::GlobalManager::get().toc(Name);
 
   #define LAMBT_TICTOC(func)\
     LAMBT_TIC(STRINGIFY(func)); \
