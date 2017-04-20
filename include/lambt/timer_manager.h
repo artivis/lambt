@@ -39,17 +39,17 @@ public:
   template <typename... Keys>
   TimerManager(Keys&&... keys);
 
-  void tic(Key&& key);
+  void tic(const Key& key);
 
-  Precision toc(Key&& key);
+  Precision toc(const Key& key);
 
-  Precision last_elapsed(Key&& key);
+  Precision last_elapsed(const Key& key);
 
-  Precision avg_toc(Key&& key);
+  Precision avg_toc(const Key& key);
 
-  Precision variance_toc(Key&& key);
+  Precision variance_toc(const Key& key);
 
-  const report_t& report(Key&& key);
+  const report_t& report(const Key& key);
 
   reports_t reports();
 
@@ -59,7 +59,7 @@ public:
 
 //  std::size_t calls(Key&& key);
 
-  bool remove(Key&& key);
+  bool remove(const Key& key);
 
   void clear();
 

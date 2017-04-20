@@ -16,44 +16,44 @@ TimerManager<Timer, Precision, Key>::TimerManager(Keys&&... keys) :
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-void TimerManager<Timer, Precision, Key>::tic(Key&& key)
+void TimerManager<Timer, Precision, Key>::tic(const Key& key)
 {
-  timers_[std::forward<Key>(key)].tic();
+  timers_[key].tic();
 }
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-Precision TimerManager<Timer, Precision, Key>::toc(Key&& key)
+Precision TimerManager<Timer, Precision, Key>::toc(const Key& key)
 {
-  return timers_[std::forward<Key>(key)].toc();
+  return timers_[key].toc();
 }
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-Precision TimerManager<Timer, Precision, Key>::last_elapsed(Key&& key)
+Precision TimerManager<Timer, Precision, Key>::last_elapsed(const Key& key)
 {
-  return timers_[std::forward<Key>(key)].last_elapsed();
+  return timers_[key].last_elapsed();
 }
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-Precision TimerManager<Timer, Precision, Key>::avg_toc(Key&& key)
+Precision TimerManager<Timer, Precision, Key>::avg_toc(const Key& key)
 {
-  return timers_[std::forward<Key>(key)].avg_toc();
+  return timers_[key].avg_toc();
 }
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-Precision TimerManager<Timer, Precision, Key>::variance_toc(Key&& key)
+Precision TimerManager<Timer, Precision, Key>::variance_toc(const Key& key)
 {
-  return timers_[std::forward<Key>(key)].variance_toc();
+  return timers_[key].variance_toc();
 }
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-auto TimerManager<Timer, Precision, Key>::report(Key&& key) -> const report_t&
+auto TimerManager<Timer, Precision, Key>::report(const Key& key) -> const report_t&
 {
-  return timers_[std::forward<Key>(key)].report();
+  return timers_[key].report();
 }
 
 template <template <typename Precision> class Timer,
@@ -70,9 +70,9 @@ auto TimerManager<Timer, Precision, Key>::reports() -> reports_t
 
 template <template <typename Precision> class Timer,
           typename Precision, typename Key>
-bool TimerManager<Timer, Precision, Key>::remove(Key&& key)
+bool TimerManager<Timer, Precision, Key>::remove(const Key& key)
 {
-  return (bool)timers_.erase(std::forward<Key>(key));
+  return (bool)timers_.erase(key);
 }
 
 template <template <typename Precision> class Timer,
